@@ -1,0 +1,62 @@
+class Queue:
+    def __init__(self, interval = 0, max_queue = 0, counter = 0) -> None:
+        self.list = []
+        self.interval = interval
+        self.counter = counter
+        self.max_queue = max_queue
+        
+    def enQueue(self, item) -> None:
+        self.list.append(item)
+        
+    def deQueue(self) -> any:
+        if (len(self.list) > 0):
+            return self.list.pop(0)
+         
+    def size(self) -> int:
+        return len(self.list)
+    
+    def isEmpty(self) -> bool:
+        return self.list == []
+    
+    def isFull(self) -> bool:
+        return self.max_queue == self.size()
+    
+    def display(self) -> list:
+        return self.list
+    
+    def manageQueue(self, next, other = None):
+        if (self.interval == self.counter):
+            self.deQueue()
+            self.counter = 0
+        
+        if(other != None):
+            if (other.isFull() == 1 and self.isFull() == 0 and next != None):
+                self.enQueue(next)
+                next = None
+        else:
+            if (self.isFull() == 0 and next != None):
+                self.enQueue(next)
+                next = None
+        
+        if (self.isEmpty() == 0):
+            self.counter += 1
+            
+        return next
+    
+inp, time = input("Enter people and time : ").split(" ")
+inp = list(inp)
+time = int(time)
+
+queue_1 = Queue(3, 5)
+queue_2 = Queue(2, 5)
+
+for index in range(1, time + 1):
+    print(index, end=" ")
+    next = None
+    if (inp != []):
+        next = inp.pop(0)
+    
+    next = queue_1.manageQueue(next)
+    next = queue_2.manageQueue(next, queue_1)
+        
+    print(inp, queue_1.display(), queue_2.display())

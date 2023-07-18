@@ -1,0 +1,53 @@
+class Queue:
+    def __init__(self) -> None:
+        self.list = []
+        
+    def enQueue(self, item) -> None:
+        self.list.append(item)
+        
+    def deQueue(self) -> any:
+        if (len(self.list) > 0):
+            return self.list.pop(0)
+        return None
+         
+    def size(self) -> int:
+        return len(self.list)
+    
+    def isEmpty(self) -> bool:
+        return self.list == []
+    
+    def isFull(self) -> bool:
+        return self.max_queue == self.size()
+    
+    def display(self) -> list:
+        return self.list
+    
+inp = input("input : ").split(",")
+
+queue = Queue()
+err_q = 0
+err_i = 0
+counter = 0
+
+for i in inp:
+    print("Step :", i)
+    if (i[0] == "D"):
+        number = int(i[1:])
+        for i in range(0, number):
+            if (queue.deQueue() == None):
+                err_q += 1
+        print("Dequeue :", queue.display())
+    elif (i[0] == "E"):
+        number = int(i[1:])
+        init = queue.size()
+        for i in range(0, number):
+            res = "*"+ str(counter)
+            queue.enQueue(res)
+            counter += 1
+        print("Enqueue :", queue.display())
+    else:
+        err_i += 1
+        print(queue.display())
+    print("Error Dequeue :", err_q)
+    print("Error input :", err_i)
+    print("--------------------")
